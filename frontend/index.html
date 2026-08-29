@@ -1,0 +1,1202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cybersecurity Threat Detection Platform</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #0f172a;
+        color: #e5e7eb;
+      }
+
+      header {
+        background: #111827;
+        color: white;
+        padding: 25px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 30px;
+      }
+
+      header p {
+        color: #cbd5e1;
+        margin-bottom: 0;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto;
+      }
+
+      /* =========================
+           DASHBOARD CARDS
+        ========================= */
+
+      .cards {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+        flex: 1;
+        min-width: 200px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .card p {
+        color: #cbd5e1;
+      }
+
+      .card h2 {
+        margin: 0;
+        font-size: 32px;
+      }
+
+      /* =========================
+           COMMON SECTION
+        ========================= */
+
+      .section {
+        margin-top: 30px;
+        background: #1e293b;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .section h2 {
+        margin-top: 0;
+      }
+
+      /* =========================
+           BUTTONS
+        ========================= */
+
+      button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 7px;
+        color: white;
+        cursor: pointer;
+        margin: 5px;
+        font-weight: bold;
+      }
+
+      button:hover {
+        opacity: 0.85;
+      }
+
+      .refresh-btn {
+        background: #2563eb;
+      }
+
+      .normal-btn {
+        background: #16a34a;
+      }
+
+      .failed-btn {
+        background: #dc2626;
+      }
+
+      .suspicious-btn {
+        background: #f59e0b;
+      }
+
+      .blocked-btn {
+        background: #9333ea;
+      }
+
+      .ack-btn {
+        background: #16a34a;
+        padding: 8px 14px;
+      }
+
+      /* =========================
+           THREAT CARDS
+        ========================= */
+
+      .threat-card {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #64748b;
+        border-radius: 10px;
+        background: #0f172a;
+      }
+
+      .threat-card h3 {
+        color: #f97316;
+        margin-top: 0;
+      }
+
+      .high {
+        color: #ef4444;
+        font-weight: bold;
+      }
+
+      .medium {
+        color: #f59e0b;
+        font-weight: bold;
+      }
+
+      .low {
+        color: #22c55e;
+        font-weight: bold;
+      }
+
+      /* =========================
+           THREAT STATISTICS
+        ========================= */
+
+      .bar-container {
+        background: #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+
+      .bar {
+        padding: 8px;
+        color: white;
+        min-width: 30px;
+        box-sizing: border-box;
+        transition: width 0.5s ease;
+      }
+
+      .normal-bar {
+        background: #22c55e;
+      }
+
+      .threat-bar {
+        background: #ef4444;
+      }
+
+      /* =========================
+           SEVERITY SUMMARY
+        ========================= */
+
+      .severity-grid {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .severity-box {
+        flex: 1;
+        min-width: 180px;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        background: #0f172a;
+        border: 1px solid #475569;
+      }
+
+      .severity-box h3 {
+        margin: 0 0 10px 0;
+      }
+
+      .severity-number {
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .severity-high {
+        border-left: 6px solid #ef4444;
+      }
+
+      .severity-medium {
+        border-left: 6px solid #f59e0b;
+      }
+
+      .severity-low {
+        border-left: 6px solid #22c55e;
+      }
+
+      /* =========================
+           ACTIVE ALERTS
+        ========================= */
+
+      .alert-card {
+        margin-top: 18px;
+        padding: 20px;
+        border-radius: 10px;
+        background: #0f172a;
+        border: 1px solid #475569;
+      }
+
+      .alert-card h3 {
+        margin-top: 0;
+        color: #f87171;
+      }
+
+      .alert-high {
+        border-left: 6px solid #ef4444;
+      }
+
+      .alert-medium {
+        border-left: 6px solid #f59e0b;
+      }
+
+      .alert-low {
+        border-left: 6px solid #22c55e;
+      }
+
+      .active-status {
+        display: inline-block;
+        background: #7f1d1d;
+        color: #fecaca;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      .acknowledged-status {
+        display: inline-block;
+        background: #14532d;
+        color: #bbf7d0;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      /* =========================
+           TABLE
+        ========================= */
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      th {
+        background: #334155;
+        color: white;
+        padding: 12px;
+        text-align: left;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #475569;
+      }
+
+      tr:hover {
+        background: #263449;
+      }
+
+      .status-threat {
+        color: #ef4444;
+        font-weight: bold;
+      }
+
+      .status-normal {
+        color: #22c55e;
+        font-weight: bold;
+      }
+
+      /* =========================
+           MESSAGES
+        ========================= */
+
+      .loading {
+        color: #facc15;
+      }
+
+      .error {
+        color: #f87171;
+        font-weight: bold;
+      }
+
+      .success {
+        color: #4ade80;
+        font-weight: bold;
+      }
+
+      .simulator-result {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #0f172a;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Cybersecurity Threat Detection Platform</h1>
+
+      <p>Real-Time Security Monitoring Dashboard</p>
+    </header>
+
+    <div class="container">
+      <!-- =====================================================
+         DASHBOARD CARDS
+    ====================================================== -->
+
+      <div class="cards">
+        <div class="card">
+          <p>Total Logs</p>
+          <h2 id="totalLogs">0</h2>
+        </div>
+
+        <div class="card">
+          <p>Detected Threats</p>
+          <h2 id="totalThreats">0</h2>
+        </div>
+
+        <div class="card">
+          <p>High Severity</p>
+          <h2 id="highThreats">0</h2>
+        </div>
+
+        <div class="card">
+          <p>Threat Rate</p>
+          <h2 id="threatRate">0%</h2>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         SECURITY EVENT SIMULATOR
+    ====================================================== -->
+
+      <div class="section">
+        <h2>Security Event Simulator</h2>
+
+        <p>
+          Simulate different types of security events to test the threat
+          detection system.
+        </p>
+
+        <button class="normal-btn" onclick="simulateNormalLogin()">
+          🟢 Simulate Normal Login
+        </button>
+
+        <button class="failed-btn" onclick="simulateFailedLogin()">
+          🔴 Simulate Failed Login
+        </button>
+
+        <button class="suspicious-btn" onclick="simulateSuspiciousActivity()">
+          🟠 Simulate Suspicious Activity
+        </button>
+
+        <button class="blocked-btn" onclick="simulateBlockedActivity()">
+          🟣 Simulate Blocked Activity
+        </button>
+
+        <div id="simulatorResult"></div>
+      </div>
+
+      <!-- =====================================================
+         DETECTED THREATS
+    ====================================================== -->
+
+      <div class="section">
+        <h2>Detected Threats</h2>
+
+        <button class="refresh-btn" onclick="loadData()">
+          🔄 Refresh Data
+        </button>
+
+        <div id="threatList">
+          <p class="loading">Loading security data...</p>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         ACTIVE SECURITY ALERTS
+    ====================================================== -->
+
+      <div class="section">
+        <h2>🚨 Active Security Alerts</h2>
+
+        <p>Security threats requiring attention.</p>
+
+        <button class="refresh-btn" onclick="loadAlerts()">
+          🔄 Refresh Alerts
+        </button>
+
+        <div id="alertList">
+          <p class="loading">Loading active alerts...</p>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         THREAT STATISTICS
+    ====================================================== -->
+
+      <div class="section">
+        <h2>Threat Statistics</h2>
+
+        <p>
+          <strong> Normal Logs </strong>
+        </p>
+
+        <div class="bar-container">
+          <div id="normalBar" class="bar normal-bar" style="width: 0%">0</div>
+        </div>
+
+        <p style="margin-top: 25px">
+          <strong> Failed / Threat Logs </strong>
+        </p>
+
+        <div class="bar-container">
+          <div id="threatBar" class="bar threat-bar" style="width: 0%">0</div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         THREAT SEVERITY SUMMARY
+    ====================================================== -->
+
+      <div class="section">
+        <h2>Threat Severity & Detection Summary</h2>
+
+        <div class="severity-grid">
+          <div class="severity-box severity-high">
+            <h3 class="high">HIGH</h3>
+
+            <div id="severityHigh" class="severity-number">0</div>
+
+            <p>Critical threats</p>
+          </div>
+
+          <div class="severity-box severity-medium">
+            <h3 class="medium">MEDIUM</h3>
+
+            <div id="severityMedium" class="severity-number">0</div>
+
+            <p>Suspicious activity</p>
+          </div>
+
+          <div class="severity-box severity-low">
+            <h3 class="low">LOW</h3>
+
+            <div id="severityLow" class="severity-number">0</div>
+
+            <p>Low risk events</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         SECURITY LOG HISTORY
+    ====================================================== -->
+
+      <div class="section">
+        <h2>Security Log History</h2>
+
+        <button class="refresh-btn" onclick="loadLogs()">
+          🔄 Refresh Logs
+        </button>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+
+                <th>Source IP</th>
+
+                <th>Event Type</th>
+
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="logTable">
+              <tr>
+                <td colspan="4">Loading logs...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   SIMULATOR RESULT
+========================================================= */
+
+      function showSimulatorResult(message, type) {
+        const result = document.getElementById("simulatorResult");
+
+        result.innerHTML = `
+        <div class="simulator-result ${type}">
+            ${message}
+        </div>
+    `;
+      }
+
+      /* =========================================================
+   SEND LOG TO BACKEND
+========================================================= */
+
+      async function sendSecurityLog(data) {
+        try {
+          const response = await fetch("/log", {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify(data),
+          });
+
+          if (!response.ok) {
+            throw new Error("Unable to send security event");
+          }
+
+          const result = await response.json();
+
+          console.log(result);
+
+          await loadData();
+
+          await loadLogs();
+
+          await loadAlerts();
+
+          return true;
+        } catch (error) {
+          console.error("Simulation error:", error);
+
+          showSimulatorResult("❌ Unable to send security event.", "error");
+
+          return false;
+        }
+      }
+
+      /* =========================================================
+   NORMAL LOGIN
+========================================================= */
+
+      async function simulateNormalLogin() {
+        const success = await sendSecurityLog({
+          source_ip: "192.168.1.100",
+
+          event_type: "login_attempt",
+
+          username: "user",
+
+          status: "success",
+
+          details: "Successful normal login",
+        });
+
+        if (success) {
+          showSimulatorResult(
+            "🟢 Normal login simulated successfully — No threat detected.",
+            "success",
+          );
+        }
+      }
+
+      /* =========================================================
+   FAILED LOGIN
+========================================================= */
+
+      async function simulateFailedLogin() {
+        const success = await sendSecurityLog({
+          source_ip: "192.168.1.10",
+
+          event_type: "login_attempt",
+
+          username: "admin",
+
+          status: "failed",
+
+          details: "Failed login attempt",
+        });
+
+        if (success) {
+          showSimulatorResult(
+            "🔴 Failed login simulated successfully.",
+            "error",
+          );
+        }
+      }
+
+      /* =========================================================
+   SUSPICIOUS ACTIVITY
+========================================================= */
+
+      async function simulateSuspiciousActivity() {
+        const success = await sendSecurityLog({
+          source_ip: "192.168.1.200",
+
+          event_type: "suspicious_activity",
+
+          username: "unknown",
+
+          status: "suspicious",
+
+          details: "Suspicious security activity detected",
+        });
+
+        if (success) {
+          showSimulatorResult(
+            "🟠 Suspicious activity simulated successfully.",
+            "loading",
+          );
+        }
+      }
+
+      /* =========================================================
+   BLOCKED ACTIVITY
+========================================================= */
+
+      async function simulateBlockedActivity() {
+        const success = await sendSecurityLog({
+          source_ip: "192.168.1.250",
+
+          event_type: "blocked_activity",
+
+          username: "unknown",
+
+          status: "blocked",
+
+          details: "Security activity was blocked",
+        });
+
+        if (success) {
+          showSimulatorResult(
+            "🟣 Blocked activity simulated successfully.",
+            "success",
+          );
+        }
+      }
+
+      /* =========================================================
+   LOAD DASHBOARD DATA
+========================================================= */
+
+      async function loadData() {
+        try {
+          const logsResponse = await fetch("/logs");
+
+          if (!logsResponse.ok) {
+            throw new Error("Unable to load logs");
+          }
+
+          const logs = await logsResponse.json();
+
+          const threatsResponse = await fetch("/threats");
+
+          if (!threatsResponse.ok) {
+            throw new Error("Unable to load threats");
+          }
+
+          const threats = await threatsResponse.json();
+
+          /* TOTAL LOGS */
+
+          document.getElementById("totalLogs").innerText = logs.length;
+
+          /* TOTAL THREATS */
+
+          document.getElementById("totalThreats").innerText = threats.length;
+
+          /* HIGH SEVERITY */
+
+          const highThreats = threats.filter(
+            (threat) => threat.severity === "HIGH",
+          );
+
+          document.getElementById("highThreats").innerText = highThreats.length;
+
+          /* THREAT RATE */
+
+          const threatRate =
+            logs.length > 0
+              ? ((threats.length / logs.length) * 100).toFixed(1)
+              : 0;
+
+          document.getElementById("threatRate").innerText = threatRate + "%";
+
+          /* =================================================
+           LOG STATISTICS
+        ================================================= */
+
+          const threatLogs = logs.filter((log) => {
+            const status = String(log.status || "").toLowerCase();
+
+            return (
+              status === "failed" ||
+              status === "blocked" ||
+              status === "threat" ||
+              status === "suspicious"
+            );
+          });
+
+          const normalLogs = logs.length - threatLogs.length;
+
+          const normalPercentage =
+            logs.length > 0 ? (normalLogs / logs.length) * 100 : 0;
+
+          const threatPercentage =
+            logs.length > 0 ? (threatLogs.length / logs.length) * 100 : 0;
+
+          document.getElementById("normalBar").style.width =
+            normalPercentage + "%";
+
+          document.getElementById("normalBar").innerText = normalLogs;
+
+          document.getElementById("threatBar").style.width =
+            threatPercentage + "%";
+
+          document.getElementById("threatBar").innerText = threatLogs.length;
+
+          /* =================================================
+           SEVERITY SUMMARY
+        ================================================= */
+
+          const highCount = threats.filter((t) => t.severity === "HIGH").length;
+
+          const mediumCount = threats.filter(
+            (t) => t.severity === "MEDIUM",
+          ).length;
+
+          const lowCount = threats.filter((t) => t.severity === "LOW").length;
+
+          document.getElementById("severityHigh").innerText = highCount;
+
+          document.getElementById("severityMedium").innerText = mediumCount;
+
+          document.getElementById("severityLow").innerText = lowCount;
+
+          /* =================================================
+           THREAT LIST
+        ================================================= */
+
+          const threatList = document.getElementById("threatList");
+
+          if (threats.length === 0) {
+            threatList.innerHTML = "<p>No threats detected.</p>";
+          } else {
+            threatList.innerHTML = "";
+
+            threats.forEach((threat) => {
+              let severityClass = "medium";
+
+              if (threat.severity === "HIGH") {
+                severityClass = "high";
+              } else if (threat.severity === "LOW") {
+                severityClass = "low";
+              }
+
+              threatList.innerHTML += `
+
+                    <div class="threat-card">
+
+                        <h3>
+                            ${threat.threat_type}
+                        </h3>
+
+                        <p>
+                            <strong>
+                                Source IP:
+                            </strong>
+
+                            ${threat.source_ip}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Severity:
+                            </strong>
+
+                            <span class="${severityClass}">
+                                ${threat.severity}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>
+                                Confidence:
+                            </strong>
+
+                            ${threat.confidence}%
+                        </p>
+
+                        <p>
+                            <strong>
+                                Description:
+                            </strong>
+
+                            ${threat.description}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Events:
+                            </strong>
+
+                            ${threat.failed_attempts}
+                        </p>
+
+                    </div>
+
+                `;
+            });
+          }
+        } catch (error) {
+          console.error("Dashboard error:", error);
+
+          document.getElementById("threatList").innerHTML =
+            '<p class="error">Unable to load security data.</p>';
+        }
+      }
+
+      /* =========================================================
+   LOAD ACTIVE ALERTS
+========================================================= */
+
+      async function loadAlerts() {
+        const alertList = document.getElementById("alertList");
+
+        try {
+          alertList.innerHTML =
+            '<p class="loading">Loading active alerts...</p>';
+
+          const response = await fetch("/alerts");
+
+          if (!response.ok) {
+            throw new Error("Unable to load alerts");
+          }
+
+          const alerts = await response.json();
+
+          if (alerts.length === 0) {
+            alertList.innerHTML = `
+
+                <p class="success">
+                    ✅ No active security alerts.
+                </p>
+
+            `;
+
+            return;
+          }
+
+          alertList.innerHTML = "";
+
+          alerts.forEach((alert, index) => {
+            let alertClass = "alert-medium";
+
+            if (alert.severity === "HIGH") {
+              alertClass = "alert-high";
+            } else if (alert.severity === "LOW") {
+              alertClass = "alert-low";
+            }
+
+            alertList.innerHTML += `
+
+                    <div
+                        class="alert-card ${alertClass}"
+                        id="alert-${index}">
+
+                        <h3>
+                            🚨 ${alert.threat_type}
+                        </h3>
+
+                        <p>
+
+                            <strong>
+                                Source IP:
+                            </strong>
+
+                            ${alert.source_ip}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Severity:
+                            </strong>
+
+                            <span class="${
+                              alert.severity === "HIGH"
+                                ? "high"
+                                : alert.severity === "MEDIUM"
+                                  ? "medium"
+                                  : "low"
+                            }">
+
+                                ${alert.severity}
+
+                            </span>
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Confidence:
+                            </strong>
+
+                            ${alert.confidence}%
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Description:
+                            </strong>
+
+                            ${alert.description}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Events:
+                            </strong>
+
+                            ${alert.failed_attempts}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Status:
+                            </strong>
+
+                            <span
+                                id="alert-status-${index}"
+                                class="active-status">
+
+                                ACTIVE
+
+                            </span>
+
+                        </p>
+
+
+                        <button
+                            class="ack-btn"
+                            onclick="acknowledgeAlert(${index})">
+
+                            ✓ Acknowledge Alert
+
+                        </button>
+
+                    </div>
+
+                `;
+          });
+        } catch (error) {
+          console.error("Alert loading error:", error);
+
+          alertList.innerHTML = `
+
+            <p class="error">
+                ❌ Unable to load active security alerts.
+            </p>
+
+        `;
+        }
+      }
+
+      /* =========================================================
+   ACKNOWLEDGE ALERT
+========================================================= */
+
+      function acknowledgeAlert(index) {
+        const status = document.getElementById(`alert-status-${index}`);
+
+        const button = document.querySelector(`#alert-${index} .ack-btn`);
+
+        if (status) {
+          status.innerText = "ACKNOWLEDGED";
+
+          status.className = "acknowledged-status";
+        }
+
+        if (button) {
+          button.innerText = "✓ Alert Acknowledged";
+
+          button.disabled = true;
+
+          button.style.opacity = "0.6";
+
+          button.style.cursor = "default";
+        }
+      }
+
+      /* =========================================================
+   LOAD SECURITY LOGS
+========================================================= */
+
+      async function loadLogs() {
+        const table = document.getElementById("logTable");
+
+        try {
+          table.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+                    Loading logs...
+                </td>
+
+            </tr>
+
+        `;
+
+          const response = await fetch("/logs");
+
+          if (!response.ok) {
+            throw new Error("Unable to load logs");
+          }
+
+          const logs = await response.json();
+
+          if (logs.length === 0) {
+            table.innerHTML = `
+
+                <tr>
+
+                    <td colspan="4">
+                        No security logs found.
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+          }
+
+          table.innerHTML = "";
+
+          logs.forEach((log) => {
+            const timestamp =
+              log.timestamp || log.time || log.created_at || "N/A";
+
+            const sourceIP = log.source_ip || log.ip || log.ip_address || "N/A";
+
+            const eventType =
+              log.event_type ||
+              log.event ||
+              log.action ||
+              log.message ||
+              "Security Event";
+
+            const status = String(log.status || "").toLowerCase();
+
+            const isThreat =
+              status === "failed" ||
+              status === "blocked" ||
+              status === "threat" ||
+              status === "suspicious" ||
+              eventType.toString().toLowerCase().includes("fail") ||
+              eventType.toString().toLowerCase().includes("attack") ||
+              eventType.toString().toLowerCase().includes("brute") ||
+              eventType.toString().toLowerCase().includes("blocked") ||
+              eventType.toString().toLowerCase().includes("suspicious");
+
+            const displayStatus = isThreat ? "THREAT" : "NORMAL";
+
+            const statusClass = isThreat ? "status-threat" : "status-normal";
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${timestamp}
+                    </td>
+
+                    <td>
+                        ${sourceIP}
+                    </td>
+
+                    <td>
+                        ${eventType}
+                    </td>
+
+                    <td class="${statusClass}">
+                        ${displayStatus}
+                    </td>
+
+                </tr>
+
+            `;
+          });
+        } catch (error) {
+          console.error("Log history error:", error);
+
+          table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="error">
+
+                    Unable to load security logs.
+
+                </td>
+
+            </tr>
+
+        `;
+        }
+      }
+
+      /* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+      loadData();
+
+      loadLogs();
+
+      loadAlerts();
+
+      /* =========================================================
+   AUTO REFRESH
+========================================================= */
+
+      setInterval(loadData, 10000);
+
+      setInterval(loadLogs, 10000);
+
+      setInterval(loadAlerts, 10000);
+    </script>
+  </body>
+</html>
