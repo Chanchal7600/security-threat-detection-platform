@@ -1,30 +1,50 @@
+/* =========================================
+   SECURITY THREAT DETECTION PLATFORM
+   Main Dashboard Styles
+   ========================================= */
+
+/* ---------- General Page ---------- */
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: #f4f6f8;
   margin: 0;
   padding: 0;
+  color: #1f2937;
 }
+
+/* ---------- Header ---------- */
 
 header {
   background: #1f2937;
   color: white;
   text-align: center;
   padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 header h1 {
   margin: 0;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 header p {
   margin-top: 10px;
+  color: #d1d5db;
+  font-size: 15px;
 }
+
+/* ---------- Main Section ---------- */
 
 main {
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  padding: 0 20px 40px;
 }
+
+/* ---------- Card ---------- */
 
 .card {
   background: white;
@@ -35,6 +55,8 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* ---------- Buttons ---------- */
+
 button {
   background: #2563eb;
   color: white;
@@ -43,13 +65,335 @@ button {
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
 }
 
 button:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
+
+button:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   PROFESSIONAL LOGOUT BUTTON
+   ========================================= */
+
+.logout-btn {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  padding: 11px 24px;
+  border-radius: 8px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 12px auto 25px;
+
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.25);
+
+  transition: all 0.25s ease;
+}
+
+/* Logout Hover */
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.4);
+}
+
+/* Logout Click */
+
+.logout-btn:active {
+  transform: translateY(0);
+
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.25);
+}
+
+/* ---------- Result Section ---------- */
 
 #result {
   margin-top: 25px;
   text-align: left;
+}
+
+/* ---------- Dashboard Sections ---------- */
+
+section {
+  margin-bottom: 25px;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: #1f2937;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+/* ---------- Inputs ---------- */
+
+input,
+select {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* ---------- Status ---------- */
+
+.status-success {
+  color: #198754;
+  font-weight: 600;
+}
+
+.status-failed {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.status-warning {
+  color: #d97706;
+  font-weight: 600;
+}
+
+/* ---------- Severity ---------- */
+
+.severity-high {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+.severity-medium {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.severity-low {
+  color: #198754;
+  font-weight: 700;
+}
+
+/* ---------- Alert Buttons ---------- */
+
+.acknowledge-btn {
+  background: #f59e0b;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 13px;
+  margin: 3px;
+}
+
+.acknowledge-btn:hover {
+  background: #d97706;
+}
+
+.resolve-btn {
+  background: #198754;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 13px;
+  margin: 3px;
+}
+
+.resolve-btn:hover {
+  background: #157347;
+}
+
+/* ---------- Refresh Button ---------- */
+
+.refresh-btn {
+  background: #2563eb;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.refresh-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ---------- Threat Cards ---------- */
+
+.threat-card {
+  background: white;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 8px;
+  border-left: 5px solid #dc3545;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Statistics ---------- */
+
+.stats-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  min-width: 180px;
+}
+
+.stat-card h3 {
+  margin-top: 0;
+  color: #374151;
+}
+
+.stat-card p {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+/* ---------- Progress Bars ---------- */
+
+.progress-container {
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 12px;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+/* ---------- Responsive Design ---------- */
+
+@media (max-width: 768px) {
+  main {
+    margin-top: 30px;
+    padding: 0 15px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  header {
+    padding: 22px 15px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  .stats-container {
+    flex-direction: column;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  .logout-btn {
+    width: auto;
+    min-width: 130px;
+  }
+}
+/* ===== PROFESSIONAL LOGOUT BUTTON ===== */
+
+button.logout-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+
+  border: none !important;
+  border-radius: 8px !important;
+
+  padding: 11px 24px !important;
+
+  font-size: 15px !important;
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+
+  margin: 15px auto 25px !important;
+
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25) !important;
+
+  transition: all 0.25s ease !important;
+}
+
+/* Hover Effect */
+
+button.logout-btn:hover {
+  background: linear-gradient(135deg, #f87171, #dc2626) !important;
+
+  transform: translateY(-2px) !important;
+
+  box-shadow: 0 7px 18px rgba(185, 28, 28, 0.4) !important;
+}
+
+/* Click Effect */
+
+button.logout-btn:active {
+  transform: translateY(0) !important;
+
+  box-shadow: 0 3px 8px rgba(185, 28, 28, 0.25) !important;
 }

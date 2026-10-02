@@ -418,3 +418,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setInterval(loadData, 10000);
 });
+async function logoutUser() {
+  try {
+    const response = await fetch("/logout");
+
+    const data = await response.json();
+
+    if (data.success) {
+      window.location.href = "/login";
+    }
+  } catch (error) {
+    console.error("Logout error:", error);
+    alert("Logout failed. Please try again.");
+  }
+}
+// =========================================================
+// USER LOGOUT
+// =========================================================
+
+function logoutUser() {
+  fetch("/logout", {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        window.location.href = "/login";
+      } else {
+        alert(data.error || "Logout failed");
+      }
+    })
+    .catch((error) => {
+      console.error("Logout error:", error);
+      alert("Logout failed");
+    });
+}

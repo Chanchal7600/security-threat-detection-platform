@@ -20,9 +20,13 @@ def detect_brute_force(logs, threshold=5):
         ).lower()
 
         if (
-            event_type in ["login_attempt", "login attempt"]
-            and status == "failed"
-        ):
+            event_type in [
+                "login_attempt",
+                "login attempt",
+                "login_failed"
+           ]
+           and status == "failed"
+    ):
 
             ip = log.get("source_ip")
 
@@ -250,6 +254,73 @@ def detect_sql_injection(logs):
                 "description":
                     f"Possible SQL injection pattern detected from {ip}"
 
+            })
+
+    return threats
+# =========================================================
+# PORT SCAN DETECTION
+# =========================================================
+
+def detect_port_scan(logs, threshold=5):
+    """
+    Detect possible port scanning activity.
+
+    If the same IP attempts connections to
+    multiple different ports, it is treated
+    as possible port scanning.
+    """
+
+    ip_ports = {}
+
+    for log in logs:
+        event_type = str(
+            log.get("event_type", "")
+        ).lower()
+
+        if event_type not in [
+            "port_scan",
+            "connection_attempt",
+            "port_attempt"
+        ]:
+            continue
+
+        ip = log.get("source_ip")
+        details = str(log.get("details", ""))
+
+        if not ip:
+            continue
+
+        # Extract port number from details
+        import re
+
+        match = re.search(
+            r"\bport\s+(\d{1,5})\b",
+            details.lower()
+        )
+
+        if match:
+            port = int(match.group(1))
+
+            if ip not in ip_ports:
+                ip_ports[ip] = set()
+
+            ip_ports[ip].add(port)
+
+    threats = []
+
+    for ip, ports in ip_ports.items():
+
+        if len(ports) >= threshold:
+            threats.append({
+                "source_ip": ip,
+                "threat_type": "Port Scan Attack",
+                "severity": "MEDIUM",
+                "confidence": 90.0,
+                "failed_attempts": len(ports),
+                "description": (
+                    f"Possible port scanning detected from {ip}. "
+                    f"{len(ports)} different ports were targeted."
+                )
             })
 
     return threats
