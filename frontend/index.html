@@ -1043,6 +1043,163 @@
         background: #15803d !important;
         transform: translateY(-1px);
       }
+      /* =========================================================
+   PROFESSIONAL SYSTEM MONITORING
+   ========================================================= */
+
+      .system-monitoring {
+        margin-top: 30px !important;
+        padding: 28px !important;
+
+        background: #111827 !important;
+
+        border: 1px solid #334155 !important;
+        border-radius: 16px !important;
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      .system-monitoring h2 {
+        margin: 0 0 6px 0 !important;
+
+        font-size: 24px !important;
+
+        color: #f8fafc !important;
+      }
+
+      .system-monitoring > p {
+        margin: 0 0 24px 0 !important;
+
+        color: #94a3b8 !important;
+
+        font-size: 14px !important;
+      }
+
+      /* ================================
+   MONITOR GRID
+   ================================ */
+
+      .system-monitoring .monitor-grid {
+        display: grid !important;
+
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+        gap: 16px !important;
+
+        width: 100% !important;
+      }
+
+      /* ================================
+   MONITOR CARD
+   ================================ */
+
+      .system-monitoring .monitor-item {
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        justify-content: space-between !important;
+
+        min-height: 170px !important;
+
+        padding: 20px !important;
+
+        background: #1e293b !important;
+
+        border: 1px solid #334155 !important;
+
+        border-radius: 12px !important;
+
+        box-sizing: border-box !important;
+
+        transition: 0.2s ease !important;
+      }
+
+      .system-monitoring .monitor-item:hover {
+        transform: translateY(-3px) !important;
+
+        border-color: #475569 !important;
+
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      /* ================================
+   CARD TITLE
+   ================================ */
+
+      .system-monitoring .monitor-item span:first-child {
+        display: block !important;
+
+        margin-bottom: 12px !important;
+
+        color: #e2e8f0 !important;
+
+        font-size: 16px !important;
+
+        font-weight: 600 !important;
+      }
+
+      /* ================================
+   STATUS
+   ================================ */
+
+      .system-monitoring .monitor-item strong {
+        display: inline-flex !important;
+
+        align-items: center !important;
+
+        width: fit-content !important;
+
+        margin-top: 18px !important;
+
+        padding: 6px 11px !important;
+
+        border-radius: 20px !important;
+
+        background: rgba(34, 197, 94, 0.12) !important;
+
+        color: #4ade80 !important;
+
+        font-size: 11px !important;
+
+        font-weight: 700 !important;
+
+        letter-spacing: 0.5px !important;
+      }
+
+      /* Green live indicator */
+
+      .system-monitoring .monitor-item strong::before {
+        content: "" !important;
+
+        width: 7px !important;
+
+        height: 7px !important;
+
+        margin-right: 7px !important;
+
+        border-radius: 50% !important;
+
+        background: #22c55e !important;
+
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.8) !important;
+      }
+
+      /* ================================
+   RESPONSIVE
+   ================================ */
+
+      @media (max-width: 1000px) {
+        .system-monitoring .monitor-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .system-monitoring .monitor-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
     </style>
   </head>
 
@@ -1091,34 +1248,75 @@
         </div>
       </div>
 
-      <!-- =====================================================
-         SECURITY EVENT SIMULATOR
-    ====================================================== -->
+      <!-- === SYSTEM MONITORING ================= -->
       <div class="system-monitoring">
-        <h2>🖥️ System Monitoring</h2>
+        <div class="section-header">
+          <div>
+            <h2>🖥️ System Monitoring</h2>
+            <p>Real-time status of security monitoring components</p>
+          </div>
+
+          <div class="system-status">
+            <span class="status-dot"></span>
+            SYSTEM OPERATIONAL
+          </div>
+        </div>
 
         <div class="monitor-grid">
-          <div class="monitor-item">
-            <span>Detection Engine</span>
-            <strong id="detectionStatus">Checking...</strong>
+          <!-- Detection Engine -->
+          <div class="monitor-card">
+            <div class="monitor-icon">🛡️</div>
+
+            <div class="monitor-content">
+              <h3>Detection Engine</h3>
+              <p>Threat detection and analysis</p>
+
+              <strong id="detectionStatus" class="status-active">
+                ACTIVE
+              </strong>
+            </div>
           </div>
 
-          <div class="monitor-item">
-            <span>Log Monitoring</span>
-            <strong id="logStatus">Checking...</strong>
+          <!-- Log Monitoring -->
+          <div class="monitor-card">
+            <div class="monitor-icon">📋</div>
+
+            <div class="monitor-content">
+              <h3>Log Monitoring</h3>
+              <p>Monitoring security and authentication logs</p>
+
+              <strong id="logStatus" class="status-active"> ACTIVE </strong>
+            </div>
           </div>
 
-          <div class="monitor-item">
-            <span>Alert Monitoring</span>
-            <strong id="alertStatus">Checking...</strong>
+          <!-- Alert Monitoring -->
+          <div class="monitor-card">
+            <div class="monitor-icon">🚨</div>
+
+            <div class="monitor-content">
+              <h3>Alert Monitoring</h3>
+              <p>Tracking detected threats and alerts</p>
+
+              <strong id="alertStatus" class="status-active"> ACTIVE </strong>
+            </div>
           </div>
 
-          <div class="monitor-item">
-            <span>Database</span>
-            <strong id="databaseStatus">Checking...</strong>
+          <!-- Database -->
+          <div class="monitor-card">
+            <div class="monitor-icon">🗄️</div>
+
+            <div class="monitor-content">
+              <h3>Database</h3>
+              <p>Secure threat detection database connection</p>
+
+              <strong id="databaseStatus" class="status-connected">
+                CONNECTED
+              </strong>
+            </div>
           </div>
         </div>
       </div>
+
       <!-- =====================================================
          DETECTED THREATS
     ====================================================== -->
